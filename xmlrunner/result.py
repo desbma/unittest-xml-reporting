@@ -412,6 +412,12 @@ class _XMLTestResult(_TextTestResult):
         )
         testcase.setAttribute('time', '%.3f' % test_result.elapsed_time)
 
+        desc = xml_document.createElement('description')
+        testcase.appendChild(desc)
+        _XMLTestResult._createCDATAsections(xml_document,
+                                            desc,
+                                            test_result.get_description())
+
         if (test_result.outcome != test_result.SUCCESS):
             elem_name = ('failure', 'error', 'skipped')[test_result.outcome-1]
             failure = xml_document.createElement(elem_name)
